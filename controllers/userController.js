@@ -22,6 +22,18 @@ async function show(req, res) {
     }
 }
 
+// create a user
+async function create(req, res) {
+    try {
+        let item = req.body
+        let data = await new UsersMod(item)
+        data.save() 
+        res.status(201).json({message: "added data"})
+    } catch(err) {
+        console.log("cannot create")
+    }
+}
+
 // update points
 async function updatePoints(req, res) {
     try {
@@ -55,4 +67,4 @@ async function resetPoints(req, res) {
 
 
 
-module.exports = { index, show, updatePoints, resetPoints, updateWins}
+module.exports = { index, show, updatePoints, resetPoints, updateWins, create}
