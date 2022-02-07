@@ -16,8 +16,11 @@ async function index(req, res) {
 async function show(req, res) {
     try {
         UsersMod.findById(req.params.id)
-        .then((result) =>)
+        .then((result) => res.status(200).json(result))
+        .catch((err) => console.log(err))
+    } catch (err) {
+        console.log("cant find by id")
     }
 }
 
-module.exports = { index}
+module.exports = { index, show}
