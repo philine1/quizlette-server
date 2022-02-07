@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    Wins: {
+        type: Number,
+        default: 0
+    }
  
     
 }, {collection: "users"});
