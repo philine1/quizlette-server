@@ -27,8 +27,10 @@ async function create(req, res) {
     try {
         let item = req.body
         let data = await new UsersMod(item)
-        data.save() 
-        res.status(201).json({message: "added data"})
+        await data.save() 
+        let data2 = await UsersMod.find()
+        let newItem = data2[data2.length-1]
+        res.status(201).json({message: "added data", id: newItem._id})
     } catch(err) {
         console.log("cannot create")
     }
