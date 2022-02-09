@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
     Wins: {
         type: Number,
         default: 0
+    },
+    Ticket: {
+        type: String,
+        required: true,
+        min: 3,
+        max: 255
     }
  
     
