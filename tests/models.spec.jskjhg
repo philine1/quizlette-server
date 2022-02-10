@@ -1,0 +1,86 @@
+const axios = require('axios')
+// import data
+const UsersData = axios.get('https://quizlette.herokuapp.com/users')
+// import model
+const Users = require('../model/User');
+var routput = Users.find().lean();
+var header ="Yes";
+messageParent(routput, header);
+
+
+describe('User model', () => {
+    const testUser = {
+        Name: "Camille"
+    };
+
+//users test
+    it('should make an instance of a post', () => {
+        const post = new Users({...testUser });
+
+        expect(user.Name).toBe('Camille');
+    });
+
+    it('should return all users', () => {
+        const users = Users.find();     
+        expect(users).toEqual(UsersData);
+    });
+
+    it('should return a post', () => {
+        const user = Users.findById(0);
+        expect(user).toEqual(UsersData[0]);
+    });
+
+    it('should throw an error if no post', () => {
+        function testError() {
+            Users.findById(50);
+        }
+        expect(testError).toThrowError('This post does not exist.');
+    });
+
+    it('should create a post', () => {
+        const newUser = Users.create(testUser);
+        expect(newUser).toEqual({...testUser });
+    });
+
+});
+
+
+
+
+
+
+
+
+// //comments test
+
+
+//     it('should make an instance of a Comment', () => {
+//         const comment = new PostAndComment.Comment({...testComment });
+
+//         expect(comment.id).toBe(2);
+//         expect(comment.comment).toBe('message for the second post'); 
+//         expect(comment.postId).toBe(1);
+//     });
+
+//     it('should return all comments', () => {
+//         const comments = PostAndComment.Comment.all;     
+//         expect(comments).toEqual(postsData.comments.comments);
+//     });
+
+//     it('should return a comment', () => {
+//         const comment = PostAndComment.Comment.findById(0);
+//         expect(comment).toEqual(postsData.comments[0]);
+//     });
+
+//     it('should throw an error if no comment', () => {
+//         function testError() {
+//             PostAndComment.Comment.findById(50);
+//         }
+//         expect(testError).toThrowError('This comment does not exist.');
+//     });
+
+//     it('should create a post', () => {
+//         const newComment = PostAndComment.Comment.createComment(testComment);
+//         expect(newComment).toEqual({...testComment });
+//     });
+// });
