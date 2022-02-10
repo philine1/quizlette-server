@@ -49,7 +49,7 @@ async function updatePoints(req, res) {
 // update points
 async function updateWins(req, res) {
     try {
-        const updatedWins = await UsersMod.findByIdAndUpdate(req.params.id, {$inc: {Points: 1}})
+        const updatedWins = await UsersMod.findByIdAndUpdate(req.params.id, {$inc: {Wins: 1}})
         res.status(200).json(updatedWins)
     } catch (err) {
         res.status(500).json({err})
