@@ -60,7 +60,7 @@ async function updateWins(req, res) {
 // reset points
 async function resetPoints(req, res) {
     try {
-        const resettedPoints = await UsersMod.findByIdAndUpdate(req.params.id, {$set: {Points: 0}})
+        const resettedPoints = await UsersMod.updateMany({}, {$set: {Points: 0}})
         res.status(200).json(resettedPoints)
     } catch (err) {
         res.status(500).json({err})
