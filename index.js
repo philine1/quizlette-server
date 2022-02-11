@@ -23,44 +23,44 @@ app.use('/users', userRoute);
 app.get("/", (req, res) => {
     res.send("Hello")
 })
-const clientRooms = {};
-io.on('connection', client => {
-    client.on('newGame', handleNewGame);
-    client.on('joinGame', handleJoinGame);
-    function handleNewGame() {
-        let roomName = makeid(5);
-        clientRooms[client.id] = roomName;
-        client.emit('gameCode', roomName);
-        state[roomName] = initGame();
-        client.join(roomName);
-        client.number = 1;
-        client.emit('init', 1);
-    }
-  function handleJoinGame(roomName) {
-    const room = io.sockets.adapter.rooms[roomName];
-    let allUsers;
-    if (room) {
-      allUsers = room.sockets;
-    }
-    let numClients = 0;
-    if (allUsers) {
-      numClients = Object.keys(allUsers).length;
-    }
-    if (numClients === 0) {
-      client.emit('unknownCode');
-      return;
-    } else if (numClients > 4) {
-      client.emit('tooManyPlayers');
-      return;
-    }
-    clientRooms[client.id] = roomName;
-    client.join(roomName);
-    client.number = 2;
-    client.emit('init', 2);
+// const clientRooms = {};
+// io.on('connection', client => {
+//     client.on('newGame', handleNewGame);
+//     client.on('joinGame', handleJoinGame);
+//     function handleNewGame() {
+//         let roomName = makeid(5);
+//         clientRooms[client.id] = roomName;
+//         client.emit('gameCode', roomName);
+//         state[roomName] = initGame();
+//         client.join(roomName);
+//         client.number = 1;
+//         client.emit('init', 1);
+//     }
+//   function handleJoinGame(roomName) {
+//     const room = io.sockets.adapter.rooms[roomName];
+//     let allUsers;
+//     if (room) {
+//       allUsers = room.sockets;
+//     }
+//     let numClients = 0;
+//     if (allUsers) {
+//       numClients = Object.keys(allUsers).length;
+//     }
+//     if (numClients === 0) {
+//       client.emit('unknownCode');
+//       return;
+//     } else if (numClients > 4) {
+//       client.emit('tooManyPlayers');
+//       return;
+//     }
+//     clientRooms[client.id] = roomName;
+//     client.join(roomName);
+//     client.number = 2;
+//     client.emit('init', 2);
     
-    startGameInterval(roomName);
-  }
-})
+//     startGameInterval(roomName);
+//   }
+// })
 const port = process.env.PORT || 8000;
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => console.log('server up and running'));
