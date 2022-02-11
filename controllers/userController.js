@@ -26,11 +26,19 @@ async function show(req, res) {
 async function create(req, res) {
     try {
         let item = req.body
-        let data = await new UsersMod(item)
-        await data.save() 
-        let data2 = await UsersMod.find()
-        let newItem = data2[data2.length-1]
-        res.status(201).json({message: "added data", id: newItem._id, name: newItem.Name})
+        UsersMod.find({Name : item.Name}, async function (err, docs) {
+            if (docs.length){
+                console.log(docs)
+                res.status(200).json({message: "logged into user", id: docs[0]._id, name: docs[0].Name})
+            }else{
+                let data = await new UsersMod(item)
+                await data.save() 
+                let data2 = await UsersMod.find()
+                let newItem = data2[data2.length-1]
+                res.status(201).json({message: "added data", id: newItem._id, name: newItem.Name})
+            }
+        });
+        
     } catch(err) {
         console.log("cannot create")
     }
@@ -66,7 +74,5 @@ async function resetPoints(req, res) {
         res.status(500).json({err})
     }
 }
-
-
 
 module.exports = { index, show, updatePoints, resetPoints, updateWins, create}
